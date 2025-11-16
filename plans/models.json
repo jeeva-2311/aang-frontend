@@ -1,0 +1,76 @@
+{
+  "project": "AANG - Automated API Testing Suite",
+  "instructions": {
+    "goal": "Build database models incrementally so development is manageable for a solo developer.",
+    "usage": "Follow phases in order. Only move to the next phase once the previous phase is stable.",
+    "note": "All listed models are eventual requirements, but only implement them when you reach their phase."
+  },
+  "phases": [
+    {
+      "phase": 1,
+      "title": "Core MVP Models",
+      "purpose": "Enable basic project → API → testcase creation and manual execution.",
+      "models": [
+        "Project",
+        "ApiEndpoint",
+        "TestCase"
+      ],
+      "when_to_implement": "Immediately. These models form the minimum base required to run the application."
+    },
+    {
+      "phase": 2,
+      "title": "Essential Testing Support",
+      "purpose": "Enable execution history, debugging, and multi-environment testing.",
+      "models": [
+        "TestRun",
+        "Environment"
+      ],
+      "when_to_implement": "After basic test creation and execution features are done."
+    },
+    {
+      "phase": 3,
+      "title": "Advanced Validation Logic",
+      "purpose": "Provide fine-grained validation and allow rule-based test generation.",
+      "models": [
+        "ExpectedAssertion",
+        "ApiSchema"
+      ],
+      "when_to_implement": "After test history and environments are stable. Useful for more accurate validation and schema-based auto-generation."
+    },
+    {
+      "phase": 4,
+      "title": "Organization & Test Grouping",
+      "purpose": "Help users organize large test collections.",
+      "models": [
+        "TestSuite",
+        "TestSuiteTestCase"
+      ],
+      "when_to_implement": "Only when users need grouping features like smoke tests, regression suites, or integration collections."
+    },
+    {
+      "phase": 5,
+      "title": "Advanced / Optional Enhancements",
+      "purpose": "Professional-level features helpful when the system grows.",
+      "models": [
+        "TestCaseFlow",
+        "Schedule",
+        "Notification"
+      ],
+      "when_to_implement": "Only after everything else works and if product goals require multi-step workflows or scheduled monitoring."
+    }
+  ],
+  "full_model_list": [
+    "Project",
+    "ApiEndpoint",
+    "TestCase",
+    "TestRun",
+    "Environment",
+    "ExpectedAssertion",
+    "ApiSchema",
+    "TestSuite",
+    "TestSuiteTestCase",
+    "TestCaseFlow",
+    "Schedule",
+    "Notification"
+  ]
+}
