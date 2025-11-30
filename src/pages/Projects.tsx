@@ -83,7 +83,7 @@ const Projects = () => {
             <ListItem
               key={project.id}
               title={project.name}
-              subtitle={project.description}
+              subtitle={project.baseUrl || project.description}
               isActive={selectedProjectId === project.id}
               onClick={() => handleProjectClick(project)}
               onEdit={() => handleEditClick(project)}

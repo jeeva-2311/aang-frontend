@@ -12,10 +12,15 @@ interface ProjectFormProps {
 const ProjectForm = ({ project, onSubmit, onCancel, isLoading }: ProjectFormProps) => {
     const [name, setName] = useState(project?.name || "");
     const [description, setDescription] = useState(project?.description || "");
+    const [baseUrl, setBaseUrl] = useState(project?.baseUrl || "");
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        onSubmit({ name, description: description || undefined });
+        onSubmit({
+            name,
+            description: description || undefined,
+            baseUrl: baseUrl || undefined
+        });
     };
 
     return (
@@ -36,6 +41,20 @@ const ProjectForm = ({ project, onSubmit, onCancel, isLoading }: ProjectFormProp
             </div>
 
             <div>
+                <label htmlFor="baseUrl" className="block text-sm font-medium text-slate-700 mb-1">
+                    Base URL
+                </label>
+                <input
+                    type="url"
+                    id="baseUrl"
+                    value={baseUrl}
+                    onChange={(e) => setBaseUrl(e.target.value)}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                    placeholder="https://api.example.com"
+                />
+            </div>
+
+            <div>
                 <label htmlFor="description" className="block text-sm font-medium text-slate-700 mb-1">
                     Description
                 </label>
@@ -49,7 +68,7 @@ const ProjectForm = ({ project, onSubmit, onCancel, isLoading }: ProjectFormProp
                 />
             </div>
 
-            <div className="flex justify-end gap-3 pt-2">
+            <div className="flex justify-end gap-3 pt-2 text-white">
                 <Button
                     type="button"
                     onClick={onCancel}

@@ -1,68 +1,57 @@
+import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios';
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
-interface FetchOptions extends RequestInit {
-    body?: any;
-}
-
 class ApiClient {
-    private baseURL: string;
+    private axiosInstance: AxiosInstance;
 
     constructor(baseURL: string) {
-        this.baseURL = baseURL;
-    }
-
-    private async request<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
-        const url = `${this.baseURL}${endpoint}`;
-
-        const config: RequestInit = {
-            ...options,
+        this.axiosInstance = axios.create({
+            baseURL,
             headers: {
                 'Content-Type': 'application/json',
-                ...options.headers,
             },
-        };
+            withCredentials: true,
+        });
 
-        if (options.body) {
-            config.body = JSON.stringify(options.body);
-        }
-
-        try {
-            const response = await fetch(url, config);
-
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({ message: 'Request failed' }));
-                throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        // Request Interceptor
+        this.axiosInstance.interceptors.request.use(
+            (config) => {
+                return config;
+            },
+            (error) => {
+                return Promise.reject(error);
             }
+        );
 
-            // Handle empty responses (e.g., DELETE operations)
-            const contentType = response.headers.get('content-type');
-            if (contentType && contentType.includes('application/json')) {
-                return await response.json();
+        // Response Interceptor
+        this.axiosInstance.interceptors.response.use(
+            (response: AxiosResponse) => {
+                return response.data;
+            },
+            (error) => {
+                // Handle global errors here
+                const message = error.response?.data?.message || error.message || 'An unexpected error occurred';
+                // You might want to throw a custom error object or just the message
+                return Promise.reject(new Error(message));
             }
-
-            return {} as T;
-        } catch (error) {
-            if (error instanceof Error) {
-                throw error;
-            }
-            throw new Error('An unexpected error occurred');
-        }
+        );
     }
 
-    async get<T>(endpoint: string): Promise<T> {
-        return this.request<T>(endpoint, { method: 'GET' });
+    async get<T>(endpoint: string, config?: AxiosRequestConfig): Promise<T> {
+        return this.axiosInstance.get<T, T>(endpoint, config);
     }
 
-    async post<T>(endpoint: string, body?: any): Promise<T> {
-        return this.request<T>(endpoint, { method: 'POST', body });
+    async post<T>(endpoint: string, body?: any, config?: AxiosRequestConfig): Promise<T> {
+        return this.axiosInstance.post<T, T>(endpoint, body, config);
     }
 
-    async put<T>(endpoint: string, body?: any): Promise<T> {
-        return this.request<T>(endpoint, { method: 'PUT', body });
+    async put<T>(endpoint: string, body?: any, config?: AxiosRequestConfig): Promise<T> {
+        return this.axiosInstance.put<T, T>(endpoint, body, config);
     }
 
-    async delete<T>(endpoint: string): Promise<T> {
-        return this.request<T>(endpoint, { method: 'DELETE' });
+    async delete<T>(endpoint: string, config?: AxiosRequestConfig): Promise<T> {
+        return this.axiosInstance.delete<T, T>(endpoint, config);
     }
 }
 

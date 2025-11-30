@@ -2,6 +2,7 @@ export interface Project {
     id: string;
     name: string;
     description?: string;
+    baseUrl?: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -9,11 +10,13 @@ export interface Project {
 export interface CreateProjectDto {
     name: string;
     description?: string;
+    baseUrl?: string;
 }
 
 export interface UpdateProjectDto {
     name?: string;
     description?: string;
+    baseUrl?: string;
 }
 
 export interface ApiEndpoint {
