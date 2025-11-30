@@ -1,0 +1,46 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node modules
+node_modules/
+
+# Output directories
+dist/
+build/
+out/
+.vite/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# IDE / Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Optional caches
+.cache/
+.eslintcache
+.stylelintcache
+
+# Local tooling
+.husky/_/
+pnpm-lock.yaml

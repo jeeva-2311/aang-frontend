@@ -1,7 +1,9 @@
+import Sidebar from "@/components/dashboard/Sidebar";
+
 const DashBoard = () => {
   return (
-    <div>
-
+    <div className="flex">
+      <Sidebar title="Projects"> <div>Projects</div> </Sidebar>
     </div>
   )
 }
